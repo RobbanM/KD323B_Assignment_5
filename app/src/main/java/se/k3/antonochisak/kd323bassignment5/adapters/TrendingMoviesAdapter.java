@@ -33,14 +33,24 @@ public class TrendingMoviesAdapter extends BaseAdapter {
         this.mLayoutInflater = mLayoutInflater;
     }
 
-    // Viewholder for posters
+    // Viewholders
     class ViewHolder {
         @InjectView(R.id.posters)
         ImageView poster;
 
+        @InjectView(R.id.tw_title)
+        TextView mTitle;
+
+        @InjectView(R.id.tw_year)
+        TextView mYear;
+
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);
 
+            int screenWidth = StaticHelpers.getScreenWidth(view.getContext());
+            mItemWidth = (screenWidth / 2);
+            mItemHeight = (int) ((double) mItemWidth / 0.677);
+            mMargin = StaticHelpers.getPixelsFromDp(view.getContext(), 2);
         }
     }
     @Override
@@ -55,19 +65,15 @@ public class TrendingMoviesAdapter extends BaseAdapter {
         }
 
         // Loading pictures with picasso.
-        Log.i("TendingMoviesAdapter", "list item added!");
             Picasso.with(view.getContext()).load(mMovies.get(i).getPoster()).into(holder.poster);
 
         // Setting movie title on list textfield
-        TextView mTitle = (TextView) view.findViewById(R.id.tw_title);
-        mTitle.setText(mMovies.get(i).getTitle());
+        holder.mTitle.setText(mMovies.get(i).getTitle());
 
         String movieYear = String.valueOf(mMovies.get(i).getYear());
-        TextView mYear = (TextView) view.findViewById(R.id.tw_year);
-        mYear.setText("Year: " + movieYear);
+        holder.mYear.setText("Year: " + movieYear);
 
-        ImageView poster = (ImageView) view.findViewById(R.id.posters);
-        poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        holder.poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return view;
     }
 

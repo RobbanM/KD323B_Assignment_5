@@ -119,7 +119,7 @@ public class TrendingFragment extends MoviesFragment
 
     void initVoteTimer() {
         // So that there can only be one vote per every 3 seconds
-        mVoteTimer = new CountDownTimer(0005, 1000) {
+        mVoteTimer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 
